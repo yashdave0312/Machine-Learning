@@ -20,7 +20,7 @@ print("Lower limit:", Lower_limit)
 
 Outliers=[]
 for i in arr:
-    if(i>Upper_limit or i<Lower_limit):
+    if(i>=Upper_limit or i<=Lower_limit):
         Outliers.append(i)
 
 print("Outliers in the given data:", Outliers)        
