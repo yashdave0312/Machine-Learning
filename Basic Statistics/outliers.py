@@ -1,4 +1,6 @@
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 arr =np.array([2,3,4,6,7,8,9,12,13,16,17,23,25,27,34,37,201])
 print("Original Array:", arr)
@@ -24,3 +26,6 @@ for i in arr:
         Outliers.append(i)
 
 print("Outliers in the given data:", Outliers)        
+
+sns.boxplot(x=arr)
+plt.show()
