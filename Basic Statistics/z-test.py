@@ -14,7 +14,6 @@ print("P-value:", p_value)
 
 alpha = 0.05
 if p_value < alpha:
-    print("Reject the null hypothesis: The sample mean is significantly different from the population mean.")   
+    print("I will reject the null hypothesis.")   
 else:
-    print("Fail to reject the null hypothesis: The sample mean is not significantly different from the population mean.")   
-    
+    print("I will accept the null hypothesis.")   
