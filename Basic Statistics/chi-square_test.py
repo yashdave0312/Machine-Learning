@@ -14,3 +14,11 @@ print("Chi-square statistic:", chi2)
 print("P-value:", p)
 print("Degrees of freedom:", dof)
 print("Expected frequencies:", expected)
+
+alpha = 0.05
+
+if p < alpha:
+    print("I will reject the null hypothesis.") 
+else:
+    print("I will accept the null hypothesis.")
+    
