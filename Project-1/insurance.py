@@ -9,6 +9,7 @@ warnings.filterwarnings("ignore")
 df = pd.read_csv("insurance.csv")
 print(df)
 
+# Exploratory Data Analysis (EDA)
 print(df.shape)
 print(df.info())
 print(df.describe())
@@ -26,3 +27,14 @@ for col in categorical:
     plt.figure(figsize=(6,4))
     sns.countplot(x = df[col])
     plt.show()
+
+for col in numeric:
+    plt.figure(figsize=(6,4))
+    sns.boxplot(x = df[col])
+    plt.show()
+
+plt.figure(figsize=(10,8))
+sns.heatmap(df.corr(numeric_only=True), annot=True)
+plt.show()
+
+# Data Cleaning and Preprocessing
