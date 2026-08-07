@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+from sklearn.preprocessing import StandardScaler
 
 warnings.filterwarnings("ignore")
 
@@ -84,3 +85,5 @@ print(df_cleaned.head())
 
 df_cleaned = df_cleaned.astype(int)
 print(df_cleaned.head())
+
+# Feature Scaling
