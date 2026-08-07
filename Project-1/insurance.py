@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 from sklearn.preprocessing import StandardScaler
-from scipy.stats import pearsonr
+from scipy.stats import pearsonr,chi2_contingency
 
 warnings.filterwarnings("ignore")
 
@@ -12,32 +12,32 @@ df = pd.read_csv("insurance.csv")
 print(df)
 
 # Exploratory Data Analysis (EDA)
-print(df.shape)
-print(df.info())
-print(df.describe())
+# print(df.shape)
+# print(df.info())
+# print(df.describe())
 
-print(df.isnull().sum())
+# print(df.isnull().sum())
 
-numeric =["age", "bmi", "charges"]
-for col in numeric:
-    plt.figure(figsize=(6,4))
-    sns.histplot(df[col],kde=True,bins = 20)
-    plt.show()
+# numeric =["age", "bmi", "charges"]
+# for col in numeric:
+#     plt.figure(figsize=(6,4))
+#     sns.histplot(df[col],kde=True,bins = 20)
+#     plt.show()
 
-categorical = ["sex", "children", "smoker", "region"]
-for col in categorical:
-    plt.figure(figsize=(6,4))
-    sns.countplot(x = df[col])
-    plt.show()
+# categorical = ["sex", "children", "smoker", "region"]
+# for col in categorical:
+#     plt.figure(figsize=(6,4))
+#     sns.countplot(x = df[col])
+#     plt.show()
 
-for col in numeric:
-    plt.figure(figsize=(6,4))
-    sns.boxplot(x = df[col])
-    plt.show()
+# for col in numeric:
+#     plt.figure(figsize=(6,4))
+#     sns.boxplot(x = df[col])
+#     plt.show()
 
-plt.figure(figsize=(10,8))
-sns.heatmap(df.corr(numeric_only=True), annot=True)
-plt.show()
+# plt.figure(figsize=(10,8))
+# sns.heatmap(df.corr(numeric_only=True), annot=True)
+# plt.show()
 
 # Data Cleaning and Preprocessing
 df_cleaned = df.copy()
@@ -105,3 +105,21 @@ correlations = {
 correlations_df = pd.DataFrame(list(correlations.items()), columns=["Feature", "Pearson Correlation"])
 correlations_df = correlations_df.sort_values(by="Pearson Correlation", ascending=False)
 print(correlations_df)
+
+cat_features = ["isfemale", "issmoker", "region_northwest", "region_southeast", "region_southwest","bmi_category_Normal weight", "bmi_category_Overweight", "bmi_category_Obesity"]
+alpha = 0.05
+df_cleaned["charges_bins"] = pd.qcut(df_cleaned["charges"], q=4, labels=False)
+print(df_cleaned.head())
+
+for cols in cat_features:
+    contingency_table = pd.crosstab(df_cleaned[cols], df_cleaned["charges_bins"])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    print(f"Chi-square test for {cols}:")
+    print(f"Chi2 Statistic: {chi2}, p-value: {p}")
+    if p < alpha:
+        print(f"Reject the null hypothesis: {cols} is associated with charges.")
+    else:
+        print(f"Fail to reject the null hypothesis: {cols} is not associated with charges.")
+
+final_df = df_cleaned[["age","isfemale","bmi","children","issmoker","charges","region_southeast","bmi_category_Obesity"]]
+print(final_df)
