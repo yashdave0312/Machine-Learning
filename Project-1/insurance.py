@@ -51,3 +51,18 @@ print(df_cleaned['sex'].value_counts())
 
 df_cleaned['sex'] = df_cleaned['sex'].map({"male":0,"female":1})
 print(df_cleaned.head())
+
+df_cleaned['smoker'] = df_cleaned['smoker'].map({"no":0,"yes":1})
+print(df_cleaned.head())
+
+df_cleaned.rename(columns = 
+    {"sex" : "isfemale",
+   "smoker" : "issmoker"}, inplace = True)
+
+df_cleaned = pd.get_dummies(df_cleaned,columns = ["region"], drop_first = True)
+print(df_cleaned.head())
+
+df_cleaned = df_cleaned.astype(int)
+print("Data types after conversion to int:")
+print(df_cleaned.dtypes)
+print(df_cleaned.head())
