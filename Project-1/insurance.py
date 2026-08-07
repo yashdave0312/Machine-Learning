@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 from sklearn.preprocessing import StandardScaler
+from scipy.stats import pearsonr
 
 warnings.filterwarnings("ignore")
 
@@ -87,3 +88,20 @@ df_cleaned = df_cleaned.astype(int)
 print(df_cleaned.head())
 
 # Feature Scaling
+
+cols = ["age", "bmi", "children"]
+scaler = StandardScaler()
+df_cleaned[cols] = scaler.fit_transform(df_cleaned[cols])
+print(df_cleaned.head())
+
+# Pearson Correlation - used to find relation between target and input variables
+
+selected_features = ["age", "bmi", "children", "isfemale", "issmoker", "region_northwest", "region_southeast", "region_southwest","bmi_category_Normal weight", "bmi_category_Overweight", "bmi_category_Obesity"]
+correlations = {
+    feature: pearsonr(df_cleaned[feature], df_cleaned["charges"])[0] 
+    for feature in selected_features       
+}
+
+correlations_df = pd.DataFrame(list(correlations.items()), columns=["Feature", "Pearson Correlation"])
+correlations_df = correlations_df.sort_values(by="Pearson Correlation", ascending=False)
+print(correlations_df)
