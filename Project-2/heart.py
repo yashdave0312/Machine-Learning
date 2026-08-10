@@ -69,3 +69,37 @@ print(df_encoded.columns)
 
 sns.heatmap(df_encoded.corr(numeric_only=True), annot=True)
 plt.show()
+
+# Pearson Correlation - used to find relation between target and input variables
+
+selected_features = ['Age', 'RestingBP', 'Cholesterol', 'FastingBS', 'MaxHR', 'Oldpeak',
+        'Sex_M', 'ChestPainType_ATA', 'ChestPainType_NAP',
+       'ChestPainType_TA', 'RestingECG_Normal', 'RestingECG_ST',
+       'ExerciseAngina_Y', 'ST_Slope_Flat', 'ST_Slope_Up']
+correlations = {
+    feature: pearsonr(df_encoded[feature], df_encoded["HeartDisease"])[0] 
+    for feature in selected_features       
+}
+
+correlations_df = pd.DataFrame(list(correlations.items()), columns=["Feature", "Pearson Correlation"])
+correlations_df = correlations_df.sort_values(by="Pearson Correlation", ascending=False)
+print(correlations_df)
+
+# chi2 test - used to find relation between target and input variables
+
+categorical_encoded = [ 'Oldpeak',
+        'Sex_M', 'ChestPainType_ATA', 'ChestPainType_NAP',
+       'ChestPainType_TA', 'RestingECG_Normal', 'RestingECG_ST',
+       'ExerciseAngina_Y', 'ST_Slope_Flat', 'ST_Slope_Up']
+
+alpha = 0.05
+
+for cols in categorical_encoded:
+    contingency_table = pd.crosstab(df_encoded[cols], df_encoded["HeartDisease"])
+    chi2, p, _ , _ = chi2_contingency(contingency_table)
+    print(f"Chi-square test for {cols}:")
+    print(f"Chi2 Statistic: {chi2}, p-value: {p}")
+    if p < alpha:
+        print(f"Reject the null hypothesis: {cols} is associated with charges.")
+    else:
+        print(f"Fail to reject the null hypothesis: {cols} is not associated with charges.")
