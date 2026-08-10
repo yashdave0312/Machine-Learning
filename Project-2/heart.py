@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt 
 import warnings
 from sklearn.preprocessing import StandardScaler
+from scipy.stats import pearsonr,chi2_contingency
 
 warnings.filterwarnings("ignore")
 
@@ -22,16 +23,16 @@ print(df["HeartDisease"].value_counts())
 
 print(df.isnull().sum())
 
-def plotting(var,num):
-    plt.subplot(2,2,num)
-    sns.histplot(df[var],kde=True,bins=20)
-    plt.show()
+# def plotting(var,num):
+#     plt.subplot(2,2,num)
+#     sns.histplot(df[var],kde=True,bins=20)
+#     plt.show()
 
-plotting("Age",1)
-plotting("RestingBP",2)
-plotting("Cholesterol",3)
-plotting("MaxHR",4)
-plt.tight_layout()
+# plotting("Age",1)
+# plotting("RestingBP",2)
+# plotting("Cholesterol",3)
+# plotting("MaxHR",4)
+# plt.tight_layout()
 
 ch_mean = df.loc[df["Cholesterol"] != 0, "Cholesterol"].mean()
 df["Cholesterol"] = df["Cholesterol"].replace(0,ch_mean)
@@ -42,13 +43,13 @@ df["RestingBP"] = df["RestingBP"].replace(0,restbp_mean)
 
 categorical = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]
 
-for col in categorical:
-    plt.figure(figsize=(6,4))
-    sns.countplot(x = df[col], hue = df["HeartDisease"])
-    plt.show()
+# for col in categorical:
+#     plt.figure(figsize=(6,4))
+#     sns.countplot(x = df[col], hue = df["HeartDisease"])
+#     plt.show()
 
-sns.heatmap(df.corr(numeric_only=True), annot=True)
-plt.show()
+# sns.heatmap(df.corr(numeric_only=True), annot=True)
+# plt.show()
 
 # Data  Preprocessing
 df_encoded = pd.get_dummies(df, columns=categorical, drop_first=True)
@@ -63,3 +64,8 @@ scale_cols = ["Age","RestingBP", "Cholesterol", "MaxHR", "Oldpeak"]
 
 df_encoded[scale_cols] = scalar.fit_transform(df_encoded[scale_cols])
 print(df_encoded.head())
+
+print(df_encoded.columns)
+
+sns.heatmap(df_encoded.corr(numeric_only=True), annot=True)
+plt.show()
