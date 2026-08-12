@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from scipy.stats import pearsonr,chi2_contingency
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
 
 warnings.filterwarnings("ignore")
 
@@ -139,3 +140,16 @@ print(model)
 
 y_pred = model.predict(X_test)
 print(y_pred)
+
+r2 = r2_score(y_test,y_pred)
+n = X_test.shape[0]
+P = X_test.shape[1]
+adjusted_r2 = 1- ((1 - r2)*(n-1) / (n - P - 1))
+
+print(r2)
+print(adjusted_r2)
+
+if int(r2) == int(adjusted_r2) :
+    print("model is perfect")
+else:
+    print("can try better")    
