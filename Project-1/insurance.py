@@ -5,6 +5,7 @@ import seaborn as sns
 import warnings
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import pearsonr,chi2_contingency
+from sklearn.model_selection import train_test_split
 
 warnings.filterwarnings("ignore")
 
@@ -71,8 +72,8 @@ print(df_cleaned.head())
 
 #  Featture Engineering and Extraction
 
-sns.histplot(df_cleaned["bmi"],kde=True,bins =20)
-plt.show()
+# sns.histplot(df_cleaned["bmi"],kde=True,bins =20)
+# plt.show()
 
 df_cleaned["bmi_category"] = pd.cut(
     df_cleaned["bmi"],
@@ -125,3 +126,8 @@ final_df = df_cleaned[["age","isfemale","bmi","children","issmoker","charges","r
 print(final_df)
 
 # Model Training
+
+X = final_df.drop("charges",axis = 1)
+Y = final_df["charges"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
