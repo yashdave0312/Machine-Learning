@@ -6,6 +6,7 @@ import warnings
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import pearsonr,chi2_contingency
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
 
 warnings.filterwarnings("ignore")
 
@@ -130,4 +131,11 @@ print(final_df)
 X = final_df.drop("charges",axis = 1)
 Y = final_df["charges"]
 
-X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.20, random_state=42)
+
+model = LinearRegression()
+model.fit(X_train,y_train)
+print(model)
+
+y_pred = model.predict(X_test)
+print(y_pred)
