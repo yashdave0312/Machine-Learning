@@ -25,19 +25,19 @@ for col in numeric:
     plt.show()
 
 categorical = ["sex", "children", "smoker", "region"]
-for col in categorical:
-    plt.figure(figsize=(6,4))
-    sns.countplot(x = df[col])
-    plt.show()
+# for col in categorical:
+#     plt.figure(figsize=(6,4))
+#     sns.countplot(x = df[col])
+#     plt.show()
 
-for col in numeric:
-    plt.figure(figsize=(6,4))
-    sns.boxplot(x = df[col])
-    plt.show()
+# for col in numeric:
+#     plt.figure(figsize=(6,4))
+#     sns.boxplot(x = df[col])
+#     plt.show()
 
-plt.figure(figsize=(10,8))
-sns.heatmap(df.corr(numeric_only=True), annot=True)
-plt.show()
+# plt.figure(figsize=(10,8))
+# sns.heatmap(df.corr(numeric_only=True), annot=True)
+# plt.show()
 
 # Data Cleaning and Preprocessing
 df_cleaned = df.copy()
@@ -123,3 +123,5 @@ for cols in cat_features:
 
 final_df = df_cleaned[["age","isfemale","bmi","children","issmoker","charges","region_southeast","bmi_category_Obesity"]]
 print(final_df)
+
+# Model Training
