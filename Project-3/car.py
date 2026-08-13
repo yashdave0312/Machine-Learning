@@ -66,7 +66,7 @@ print(df_encoded.head())
 
 
 # Pearson Correlation
-# print(df_encoded.columns)
+print(df_encoded.columns)
 selected_features = ['year', 'mileage', 'tax', 'mpg', 'engineSize', 'model_ C-MAX',
        'model_ EcoSport', 'model_ Edge', 'model_ Escort', 'model_ Fiesta',
        'model_ Focus', 'model_ Fusion', 'model_ Galaxy', 'model_ Grand C-MAX',
@@ -86,3 +86,40 @@ correlations = {
 correlations_df = pd.DataFrame(list(correlations.items()), columns=["Feature", "Pearson Correlation"])
 correlations_df = correlations_df.sort_values(by="Pearson Correlation", ascending=False)
 print(correlations_df)
+
+# Chi2 test
+
+new_categorical =  ['model_ C-MAX',
+       'model_ EcoSport', 'model_ Edge', 'model_ Escort', 'model_ Fiesta',
+       'model_ Focus', 'model_ Fusion', 'model_ Galaxy', 'model_ Grand C-MAX',
+       'model_ Grand Tourneo Connect', 'model_ KA', 'model_ Ka+',
+       'model_ Kuga', 'model_ Mondeo', 'model_ Mustang', 'model_ Puma',
+       'model_ Ranger', 'model_ S-MAX', 'model_ Streetka',
+       'model_ Tourneo Connect', 'model_ Tourneo Custom',
+       'model_ Transit Tourneo', 'model_Focus', 'transmission_Manual',
+       'transmission_Semi-Auto', 'fuelType_Electric', 'fuelType_Hybrid',
+       'fuelType_Other', 'fuelType_Petrol']
+
+# sns.histplot(x = df_encoded["price"],kde=True)
+# plt.show()
+
+alpha = 0.05
+df_encoded["price_bins"] = pd.qcut(df_encoded["price"], q=4, labels=False)
+print(df_encoded.head())
+list = []
+for cols in new_categorical:
+    contingency_table = pd.crosstab(df_encoded[cols], df_encoded["price_bins"])
+    chi2, p, _ , _ = chi2_contingency(contingency_table)
+    print(f"Chi-square test for {cols}:")
+    print(f"Chi2 Statistic: {chi2}, p-value: {p}")
+    if p < alpha:
+        print(f"Reject the null hypothesis: {cols} is associated with charges.")
+        list.append(cols)
+    else:
+        print(f"Fail to reject the null hypothesis: {cols} is not associated with charges.")
+
+print(list)        
+
+final_df = df_encoded[['year','price','mileage','tax','mpg','engineSize','model_ C-MAX', 'model_ EcoSport', 'model_ Edge', 'model_ Fiesta', 'model_ Focus', 'model_ Fusion', 'model_ Galaxy', 'model_ Grand C-MAX', 'model_ Grand Tourneo Connect', 'model_ KA', 'model_ Ka+', 'model_ Kuga', 'model_ Mustang', 'model_ Puma', 'model_ S-MAX', 'model_ Tourneo Connect', 'model_ Tourneo Custom', 'transmission_Manual', 'transmission_Semi-Auto', 'fuelType_Hybrid', 'fuelType_Petrol']]
+print(final_df.shape)
+print(final_df.head())
