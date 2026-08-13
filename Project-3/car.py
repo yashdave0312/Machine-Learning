@@ -37,3 +37,7 @@ print(df.columns)
 print(df.loc[df["fuelType"] == "Electric","fuelType"].count())
 
 print(df["model"].value_counts())
+
+plt.figure(figsize=(10,8))
+sns.heatmap(df.corr(numeric_only=True), annot=True)
+plt.show()
