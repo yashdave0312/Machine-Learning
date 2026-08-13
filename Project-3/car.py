@@ -50,3 +50,6 @@ print(df["transmission"].value_counts())
 
 df_encoded = pd.get_dummies(df, columns=categorical, drop_first=True)
 print(df_encoded.head())
+
+df_encoded = df_encoded.astype(int)
+print(df_encoded.head())
