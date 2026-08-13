@@ -7,14 +7,33 @@ import warnings
 warnings.filterwarnings("ignore")
 
 df = pd.read_csv("Car_prediction.csv")
+
+# EDA
+
 # print(df.head())
 # print(df.shape)
 # print(df.describe())
 # print(df.info())
 
-print(df.drop_duplicates())
+# print(df.drop_duplicates())
 
-print(df.isnull().sum())
-print(df.dtypes)
+# print(df.isnull().sum())
+# print(df.dtypes)
 
 numerical = ["year","price","mileage","tax","mpg","engineSize"]
+
+# for cols in numerical :
+#     sns.histplot(x = df[cols],kde = True)
+#     plt.show()
+
+print(df.loc[df["engineSize"] == 0,"engineSize"].count())
+print(df.columns)
+
+# categorical = ["model","transmission","fuelType"]
+# for cols in categorical:
+#     sns.countplot(x = df[cols])
+#     plt.show()
+
+print(df.loc[df["fuelType"] == "Electric","fuelType"].count())
+
+print(df["model"].value_counts())
