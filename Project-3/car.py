@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns 
 import warnings
+from sklearn.preprocessing import StandardScaler
+from scipy.stats import pearsonr,chi2_contingency
 
 warnings.filterwarnings("ignore")
 
@@ -53,3 +55,14 @@ print(df_encoded.head())
 
 df_encoded = df_encoded.astype(int)
 print(df_encoded.head())
+
+# Scalarisation
+
+scaler = StandardScaler()
+scal_cols =["year","mileage","tax","mpg","engineSize"]
+
+df_encoded[scal_cols] = scaler.fit_transform(df_encoded[scal_cols])
+print(df_encoded.head())
+
+
+# Pearson Correlation
