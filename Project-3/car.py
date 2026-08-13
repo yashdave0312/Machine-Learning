@@ -5,6 +5,9 @@ import seaborn as sns
 import warnings
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import pearsonr,chi2_contingency
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
 
 warnings.filterwarnings("ignore")
 
@@ -123,3 +126,29 @@ print(list)
 final_df = df_encoded[['year','price','mileage','tax','mpg','engineSize','model_ C-MAX', 'model_ EcoSport', 'model_ Edge', 'model_ Fiesta', 'model_ Focus', 'model_ Fusion', 'model_ Galaxy', 'model_ Grand C-MAX', 'model_ Grand Tourneo Connect', 'model_ KA', 'model_ Ka+', 'model_ Kuga', 'model_ Mustang', 'model_ Puma', 'model_ S-MAX', 'model_ Tourneo Connect', 'model_ Tourneo Custom', 'transmission_Manual', 'transmission_Semi-Auto', 'fuelType_Hybrid', 'fuelType_Petrol']]
 print(final_df.shape)
 print(final_df.head())
+
+
+# Model Training 
+
+X = final_df.drop("price",axis =1)
+y = final_df["price"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+
+model = LinearRegression()
+model.fit(X_train,y_train)
+print(model)
+
+y_pred = model.predict(X_test)
+print(y_pred)
+
+r2 = r2_score(y_test,y_pred)
+print(final_df.shape)
+
+n = X_test.shape[0]
+P = X_test.shape[1]
+
+adjusted_r2 = 1- ((1 - r2)*(n-1) / (n - P - 1))
+
+print(r2)
+print(adjusted_r2) 
