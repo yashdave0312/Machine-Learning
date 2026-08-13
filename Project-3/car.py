@@ -29,7 +29,7 @@ numerical = ["year","price","mileage","tax","mpg","engineSize"]
 print(df.loc[df["engineSize"] == 0,"engineSize"].count())
 print(df.columns)
 
-# categorical = ["model","transmission","fuelType"]
+categorical = ["model","transmission","fuelType"]
 # for cols in categorical:
 #     sns.countplot(x = df[cols])
 #     plt.show()
@@ -38,6 +38,15 @@ print(df.loc[df["fuelType"] == "Electric","fuelType"].count())
 
 print(df["model"].value_counts())
 
-plt.figure(figsize=(10,8))
-sns.heatmap(df.corr(numeric_only=True), annot=True)
-plt.show()
+# plt.figure(figsize=(10,8))
+# sns.heatmap(df.corr(numeric_only=True), annot=True)
+# plt.show()
+
+# Data Preprocessing started
+
+print(categorical)
+print(df["fuelType"].value_counts())
+print(df["transmission"].value_counts())
+
+df_encoded = pd.get_dummies(df, columns=categorical, drop_first=True)
+print(df_encoded.head())
