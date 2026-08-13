@@ -28,19 +28,19 @@ for col in numeric:
     plt.show()
 
 categorical = ["sex", "children", "smoker", "region"]
-# for col in categorical:
-#     plt.figure(figsize=(6,4))
-#     sns.countplot(x = df[col])
-#     plt.show()
+for col in categorical:
+    plt.figure(figsize=(6,4))
+    sns.countplot(x = df[col])
+    plt.show()
 
-# for col in numeric:
-#     plt.figure(figsize=(6,4))
-#     sns.boxplot(x = df[col])
-#     plt.show()
+for col in numeric:
+    plt.figure(figsize=(6,4))
+    sns.boxplot(x = df[col])
+    plt.show()
 
-# plt.figure(figsize=(10,8))
-# sns.heatmap(df.corr(numeric_only=True), annot=True)
-# plt.show()
+plt.figure(figsize=(10,8))
+sns.heatmap(df.corr(numeric_only=True), annot=True)
+plt.show()
 
 # Data Cleaning and Preprocessing
 df_cleaned = df.copy()
@@ -74,8 +74,8 @@ print(df_cleaned.head())
 
 #  Featture Engineering and Extraction
 
-# sns.histplot(df_cleaned["bmi"],kde=True,bins =20)
-# plt.show()
+sns.histplot(df_cleaned["bmi"],kde=True,bins =20)
+plt.show()
 
 df_cleaned["bmi_category"] = pd.cut(
     df_cleaned["bmi"],
