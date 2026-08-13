@@ -66,3 +66,23 @@ print(df_encoded.head())
 
 
 # Pearson Correlation
+# print(df_encoded.columns)
+selected_features = ['year', 'mileage', 'tax', 'mpg', 'engineSize', 'model_ C-MAX',
+       'model_ EcoSport', 'model_ Edge', 'model_ Escort', 'model_ Fiesta',
+       'model_ Focus', 'model_ Fusion', 'model_ Galaxy', 'model_ Grand C-MAX',
+       'model_ Grand Tourneo Connect', 'model_ KA', 'model_ Ka+',
+       'model_ Kuga', 'model_ Mondeo', 'model_ Mustang', 'model_ Puma',
+       'model_ Ranger', 'model_ S-MAX', 'model_ Streetka',
+       'model_ Tourneo Connect', 'model_ Tourneo Custom',
+       'model_ Transit Tourneo', 'model_Focus', 'transmission_Manual',
+       'transmission_Semi-Auto', 'fuelType_Electric', 'fuelType_Hybrid',
+       'fuelType_Other', 'fuelType_Petrol']
+
+correlations = {
+    feature: pearsonr(df_encoded[feature], df_encoded["price"])[0] 
+    for feature in selected_features       
+}
+
+correlations_df = pd.DataFrame(list(correlations.items()), columns=["Feature", "Pearson Correlation"])
+correlations_df = correlations_df.sort_values(by="Pearson Correlation", ascending=False)
+print(correlations_df)
