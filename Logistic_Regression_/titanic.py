@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import warnings 
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import chi2_contingency
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
 warnings.filterwarnings("ignore")
 
@@ -60,3 +62,16 @@ print(df.head())
 
 final_df = df[[ "pclass","sex","age","sibsp","parch","fare","alone","embarked_S","survived"]]
 print(final_df.head())
+
+X = final_df.drop("survived",axis=1)
+y = final_df["survived"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+
+model =LogisticRegression()
+model.fit(X_train,y_train)
+
+y_pred = model.predict(X_test)
+
+print(y_test)
+print(y_pred)
