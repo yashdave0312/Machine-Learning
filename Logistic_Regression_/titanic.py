@@ -7,6 +7,8 @@ from sklearn.preprocessing import StandardScaler
 from scipy.stats import chi2_contingency
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
+
 
 warnings.filterwarnings("ignore")
 
