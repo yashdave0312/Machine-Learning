@@ -48,8 +48,8 @@ print(df.head())
 
 scaler = StandardScaler()
 scal_cols = ["pclass", "age","fare","sibsp","parch"]
-# print(df["sibsp"].value_counts())
-# print(df["parch"].value_counts())
+print(df["sibsp"].value_counts())
+print(df["parch"].value_counts())
 
 df[scal_cols] = scaler.fit_transform(df[scal_cols])
 print(df.head())
