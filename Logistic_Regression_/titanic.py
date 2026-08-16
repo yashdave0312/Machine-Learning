@@ -77,3 +77,11 @@ y_pred = model.predict(X_test)
 
 print(y_test)
 print(y_pred)
+
+accuracy = accuracy_score(y_test,y_pred)
+print(accuracy)
+
+con_matrix = confusion_matrix(y_test,y_pred)
+print(con_matrix)
+
+print(classification_report(y_test,y_pred))
