@@ -6,6 +6,7 @@ import warnings
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import chi2_contingency
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
 
 warnings.filterwarnings("ignore")
@@ -46,16 +47,16 @@ print(df.head())
 
 # Feature Scaler
 
-# scaler = StandardScaler()
-# scal_cols = ["pclass", "age","fare","sibsp","parch"]
-# print(df["sibsp"].value_counts())
-# print(df["parch"].value_counts())
+scaler = StandardScaler()
+scal_cols = ["pclass", "age","fare","sibsp","parch"]
+print(df["sibsp"].value_counts())
+print(df["parch"].value_counts())
 
-# df[scal_cols] = scaler.fit_transform(df[scal_cols])
-# print(df.head())
+df[scal_cols] = scaler.fit_transform(df[scal_cols])
+print(df.head())
 
-sns.heatmap(df.corr(numeric_only=True),annot = True)
-plt.show()
+# sns.heatmap(df.corr(numeric_only=True),annot = True)
+# plt.show()
 
 df.drop("embarked_Q", axis=1, inplace=True)
 print(df.head())
@@ -67,3 +68,21 @@ X = final_df.drop("survived",axis = 1)
 y = final_df["survived"]
 print(X)
 print(y)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+model = DecisionTreeClassifier()
+print(model)
+
+model.fit(X_train,y_train)
+
+y_pred = model.predict(X_test)
+# print(y_test)
+# print(y_pred)
+
+accuracy = accuracy_score(y_test,y_pred)
+print(accuracy)
+
+conf = confusion_matrix(y_test,y_pred)
+print(conf)
+
+print(classification_report(y_test,y_pred))
