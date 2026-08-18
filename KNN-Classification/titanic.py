@@ -64,3 +64,9 @@ print(df.head())
 
 final_df = df[[ "pclass","sex","age","sibsp","parch","fare","alone","embarked_S","survived"]]
 print(final_df.head())
+
+X = final_df.drop("survived",axis = 1)
+y = final_df["survived"]
+
+# print(X)
+# print(y)
