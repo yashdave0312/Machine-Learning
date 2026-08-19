@@ -11,10 +11,10 @@ warnings.filterwarnings("ignore")
 df = pd.read_csv("heart.csv")
 print(df.head())
 
-print(df.shape)
-print(df.describe())
-print(df.columns)
-print(df.describe())
+# print(df.shape)
+# print(df.describe())
+# print(df.columns)
+# print(df.describe())
 
 #EDA 
 
@@ -23,16 +23,16 @@ print(df["HeartDisease"].value_counts())
 
 print(df.isnull().sum())
 
-def plotting(var,num):
-    plt.subplot(2,2,num)
-    sns.histplot(df[var],kde=True,bins=20)
-    plt.show()
+# def plotting(var,num):
+#     plt.subplot(2,2,num)
+#     sns.histplot(df[var],kde=True,bins=20)
+#     plt.show()
 
-plotting("Age",1)
-plotting("RestingBP",2)
-plotting("Cholesterol",3)
-plotting("MaxHR",4)
-plt.tight_layout()
+# plotting("Age",1)
+# plotting("RestingBP",2)
+# plotting("Cholesterol",3)
+# plotting("MaxHR",4)
+# plt.tight_layout()
 
 ch_mean = df.loc[df["Cholesterol"] != 0, "Cholesterol"].mean()
 df["Cholesterol"] = df["Cholesterol"].replace(0,ch_mean)
@@ -43,13 +43,13 @@ df["RestingBP"] = df["RestingBP"].replace(0,restbp_mean)
 
 categorical = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]
 
-for col in categorical:
-    plt.figure(figsize=(6,4))
-    sns.countplot(x = df[col], hue = df["HeartDisease"])
-    plt.show()
+# for col in categorical:
+#     plt.figure(figsize=(6,4))
+#     sns.countplot(x = df[col], hue = df["HeartDisease"])
+#     plt.show()
 
-sns.heatmap(df.corr(numeric_only=True), annot=True)
-plt.show()
+# sns.heatmap(df.corr(numeric_only=True), annot=True)
+# plt.show()
 
 # Data  Preprocessing
 df_encoded = pd.get_dummies(df, columns=categorical, drop_first=True)
@@ -67,8 +67,8 @@ print(df_encoded.head())
 
 print(df_encoded.columns)
 
-sns.heatmap(df_encoded.corr(numeric_only=True), annot=True)
-plt.show()
+# sns.heatmap(df_encoded.corr(numeric_only=True), annot=True)
+# plt.show()
 
 # Pearson Correlation - used to find relation between target and input variables
 
@@ -109,3 +109,4 @@ print(list)
 
 df_final = df_encoded[['Age','RestingBP','Cholesterol', 'FastingBS', 'MaxHR','Oldpeak', 'Sex_M', 'ChestPainType_ATA', 'ChestPainType_NAP', 'RestingECG_Normal', 'RestingECG_ST', 'ExerciseAngina_Y', 'ST_Slope_Flat', 'ST_Slope_Up','HeartDisease']]
 print(df_final)
+
