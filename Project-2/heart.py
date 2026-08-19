@@ -12,6 +12,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score,classification_report,confusion_matrix,f1_score
+import joblib
 
 warnings.filterwarnings("ignore")
 
@@ -146,3 +147,8 @@ for name,model in models.items() :
     })
 
 print(result)
+
+
+# joblib.dump(models["KNN Classification"],"model_knn.pkl")
+# joblib.dump(scalar,"scalar.pkl")
+# joblib.dump(X.columns.tolist(),"columns.pkl")
