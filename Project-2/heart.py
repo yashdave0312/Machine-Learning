@@ -5,6 +5,13 @@ import matplotlib.pyplot as plt
 import warnings
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import pearsonr,chi2_contingency
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score,classification_report,confusion_matrix,f1_score
 
 warnings.filterwarnings("ignore")
 
@@ -65,7 +72,7 @@ scale_cols = ["Age","RestingBP", "Cholesterol", "MaxHR", "Oldpeak"]
 df_encoded[scale_cols] = scalar.fit_transform(df_encoded[scale_cols])
 print(df_encoded.head())
 
-print(df_encoded.columns)
+# print(df_encoded.columns)
 
 # sns.heatmap(df_encoded.corr(numeric_only=True), annot=True)
 # plt.show()
@@ -110,3 +117,32 @@ print(list)
 df_final = df_encoded[['Age','RestingBP','Cholesterol', 'FastingBS', 'MaxHR','Oldpeak', 'Sex_M', 'ChestPainType_ATA', 'ChestPainType_NAP', 'RestingECG_Normal', 'RestingECG_ST', 'ExerciseAngina_Y', 'ST_Slope_Flat', 'ST_Slope_Up','HeartDisease']]
 print(df_final)
 
+X = df_final.drop("HeartDisease",axis = 1)
+y = df_final["HeartDisease"]
+# print(X)
+# print(y)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+
+models = {
+    "Logistic Regression" : LogisticRegression(),
+    "KNN Classification" : KNeighborsClassifier(n_neighbors = 5),
+    "Naive Bayes Classification" : GaussianNB(),
+    "Support Vector Machines" : SVC(),
+    "Decision Tree " : DecisionTreeClassifier()
+}
+
+result = []
+
+for name,model in models.items() :
+    model.fit(X_train,y_train)
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test,y_pred)
+    f1 = f1_score(y_test,y_pred)
+    result.append({
+        "model" : name,
+        "accuracy" : round(accuracy,2),
+        "f1_score" : round(f1,2)
+    })
+
+print(result)
