@@ -149,7 +149,7 @@ adjusted_r2 = 1- ((1 - r2)*(n-1) / (n - P - 1))
 print(r2)
 print(adjusted_r2)
 
-if int(r2) == int(adjusted_r2) :
-    print("model is perfect")
-else:
-    print("can try better")    
+# my bad , as cross validation cant be done for linear regression
+# scores = cross_val_score(model,X,Y,cv = 5,scoring = "accuracy")
+
+# print(scores)
