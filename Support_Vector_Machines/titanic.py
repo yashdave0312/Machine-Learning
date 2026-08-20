@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import warnings 
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import chi2_contingency
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split,cross_val_score
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
 
@@ -86,3 +86,13 @@ conf = confusion_matrix(y_test,y_pred)
 print(conf)
 
 print(classification_report(y_test,y_pred))
+
+scores = cross_val_score(model,X,y,cv = 5,scoring = "accuracy")
+print(scores)
+
+print(scores.mean())
+
+if (scores.mean() > accuracy):
+    print("Cross validation is succesfully implemented not normal accuray score.")
+else:
+    print("Normal accuracy method is implemented , not cross validation.")    
