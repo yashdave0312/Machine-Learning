@@ -5,7 +5,7 @@ import seaborn as sns
 import warnings
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import pearsonr,chi2_contingency
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split,cross_val_score
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 
