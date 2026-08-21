@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns 
 import warnings
-from sklearn.model_selection import train_test_split,GridSearchCV
+from sklearn.model_selection import train_test_split,GridSearchCV,RandomizedSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 
@@ -63,3 +63,15 @@ print(classifier.cv_results_)
 
 results = pd.DataFrame(classifier.cv_results_)
 print(results[["param_C","param_kernel","mean_test_score"]])
+
+# implementation of random search cv on svm 
+
+classifier_svm_rsc = RandomizedSearchCV((model_svm),{
+    "C" : [1,10,20,30],
+    "kernel" : ["linear","rbf"] 
+},n_iter=4,cv=5,return_train_score=False)
+
+classifier_svm_rsc.fit(X,y)
+
+result_rsc = pd.DataFrame(classifier_svm_rsc.cv_results_)
+print(result_rsc[['param_kernel', 'param_C','mean_test_score']])
