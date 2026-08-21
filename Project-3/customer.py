@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import warnings
-
+from sklearn.preprocessing import StandardScaler
 warnings.filterwarnings("ignore")
 
 # EDA
@@ -32,13 +32,13 @@ print(df.head())
 numeric = []
 categorical=[]
 
-for col in df.columns:
-    if df[col].dtype == "int64":
-        numeric.append(col)
-    elif df[col].dtype == "float":
-        numeric.append(col)
-    else :
-        categorical.append(col)
+# for col in df.columns:
+#     if df[col].dtype == "int64":
+#         numeric.append(col)
+#     elif df[col].dtype == "float":
+#         numeric.append(col)
+#     else :
+#         categorical.append(col)
 
 # for col in numeric :
 #     sns.histplot(x = df[col],kde=True)
@@ -60,4 +60,32 @@ for col in categorical:
     print(df[col].value_counts())
 
 df = df.drop(["Color","Location"],axis=1)
+print(df.head())
+# print(df.columns)
+
+for col in df.columns:
+    if df[col].dtype == "int64":
+        numeric.append(col)
+    elif df[col].dtype == "float":
+        numeric.append(col)
+    else :
+        categorical.append(col)
+
+# print(categorical)
+
+# Data Preprocessing
+
+print(df["Subscription Status"].value_counts())
+df = pd.get_dummies(df,columns = ['Gender', 'Category', 'Size', 'Season', 'Subscription Status', 'Shipping Type', 'Discount Applied', 'Promo Code Used', 'Payment Method', 'Frequency of Purchases'],drop_first=True)
+print(df.columns)
+
+df = df.astype("int")
+print(df.head())
+
+print(numeric)
+
+# Standard Scalarisataion
+
+scaler = StandardScaler()
+df[numeric] = scaler.fit_transform(df[numeric])
 print(df.head())
