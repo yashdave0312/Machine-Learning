@@ -40,3 +40,13 @@ y_pred1 = grad_model.predict(X_test)
 
 accuracy_grad = accuracy_score(y_test,y_pred)
 print(accuracy_grad)
+
+# XGBOOST Boosting technique
+xg_model = XGBClassifier(n_estimators=100,learning_rate=0.1,max_depth=3,random_state=42,use_label_encoder = False,)
+
+xg_model.fit(X_train,y_train)
+
+y_pred2 = xg_model.predict(X_test)
+
+accuracy_xg = accuracy_score(y_test,y_pred2)
+print(accuracy_xg)
