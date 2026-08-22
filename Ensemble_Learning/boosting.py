@@ -21,11 +21,22 @@ print(y_encoded)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.33, random_state=42)
 
+# ADABOOST BOOSTING TECHNIQUE
 ada_model = AdaBoostClassifier(n_estimators=100,random_state=42)
 
 ada_model.fit(X_train,y_train)
 
 y_pred = ada_model.predict(X_test)
 
-accuracy = accuracy_score(y_test,y_pred)
-print(accuracy)
+accuracy_ada = accuracy_score(y_test,y_pred)
+print(accuracy_ada)
+
+# GRADIENT BOOSTING TECHNIQUE
+grad_model =GradientBoostingClassifier(n_estimators=100,random_state=42,learning_rate=0.1)
+
+grad_model.fit(X_train,y_train)
+
+y_pred1 = grad_model.predict(X_test)
+
+accuracy_grad = accuracy_score(y_test,y_pred)
+print(accuracy_grad)
