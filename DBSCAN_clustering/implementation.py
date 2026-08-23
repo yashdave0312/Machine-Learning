@@ -5,7 +5,7 @@ from sklearn.datasets import make_moons
 from sklearn.cluster import KMeans,DBSCAN
 from sklearn.preprocessing import StandardScaler
 
-X,y_true = make_moons(n_samples=500 , noise = 0.5,random_state=42)
+X,y_true = make_moons(n_samples=500 , noise = 0.05,random_state=42)
 # print(X)
 # print(y_true)
 
@@ -31,10 +31,20 @@ for k in k_range:
 plt.plot(k_range,wcss,marker = "o")
 plt.show()
 
-kmeans_final = KMeans(n_clusters=8,random_state=42)
+kmeans_final = KMeans(n_clusters=6,random_state=42)
 cluster_labels = kmeans_final.fit_predict(X_scaled)
 
 df["clusters"] = cluster_labels
 
-sns.scatterplot(x = df["Feature_1"],y= df["Feature_2"],hue=df["clusters"],palette="viridis")
+sns.scatterplot(x = df["Feature_1"],y= df["Feature_2"],hue=df["clusters"],palette="tab10")
+plt.show()
+
+# DBSCAN
+
+dbscan = DBSCAN(eps=0.3,min_samples=5)
+dbscan_labels = dbscan.fit_predict(X_scaled)
+
+df["dbscan_clusters"] = dbscan_labels
+
+sns.scatterplot(x = df["Feature_1"],y=df["Feature_2"],hue=df["dbscan_clusters"])
 plt.show()
