@@ -12,4 +12,29 @@ print(df)
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(df)
-print(X_scaled)
+# print(X_scaled)
+
+# wcss finding i.e., finding the value of K 
+
+wcss = []
+K_range = range(1,11)
+
+for k in K_range:
+    kmeans = KMeans(n_clusters=k,random_state=42)
+    kmeans.fit(X_scaled)
+    wcss.append(kmeans.inertia_)
+
+print(wcss)    
+
+plt.plot(K_range,wcss,marker = "o")
+plt.show()
+
+kmeans_final = KMeans(n_clusters=3,random_state=42)
+cluster_labels = kmeans_final.fit_predict(X_scaled)
+print(cluster_labels)
+
+df["cluster"] = cluster_labels
+
+# plotting of clusters 
+sns.scatterplot(x = df["Feature_1"], y = df["Feature_2"] , hue=df["cluster"],palette="viridis")
+plt.show()
